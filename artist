@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+if [ "$#" -ne 2 ]; then
+    echo "Usage: $0 <access_token> <artist_id>"
+    exit 1
+fi
+
+access_token=$1
+artist_id=$2
+
+artist=$(curl --fail --silent --request GET \
+  --url https://api.spotify.com/v1/artists/$artist_id \
+  --header "Authorization: Bearer $access_token")
+
+name=$(echo -n "$artist" | jq -r '.name')
+image=$(echo -n "$artist" | jq -r '.images | max_by(.height) | .url')
+
+echo -n "{\"name\":\"$name\", \"image\":\"$image\"}"

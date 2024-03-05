@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+set -e
+
+if [ -z "$SPOTIFY_CLIENT_ID" ]; then
+    echo "SPOTIFY_CLIENT_ID environment variable needs to be set and non-empty"
+    exit 1
+fi
+
+if [ -z "$SPOTIFY_CLIENT_SECRET" ]; then
+    echo "SPOTIFY_CLIENT_SECRET environment variable needs to be set and non-empty"
+    exit 1
+fi
+
+if [ -z "$SPOTIFY_ARTIST_IDS" ]; then
+    echo "SPOTIFY_ARTIST_IDS environment variable needs to be set and non-empty"
+    exit 1
+fi
+
+access_token=$(source ./login "$SPOTIFY_CLIENT_ID" "$SPOTIFY_CLIENT_SECRET")
+echo "Login successful"
+IFS=';' read -ra artists <<< "$SPOTIFY_ARTIST_IDS"
+
+rm -rf data
+mkdir data
+
+for artist in "${artists[@]}"; do
+    mkdir "data/$artist"
+    echo "Getting details for id $artist"
+    artist_details=$(source ./artist "$access_token" "$artist")
+    artist_name=$(echo "$artist_details" | jq -r .name)
+    echo "Artist is: $artist_name"
+    albums=$(source ./albums "$access_token" "$artist")
+    echo "Albums retrieved successfully"
+
+    cat <<< "${artist_details}" > "data/${artist}/artist"
+    cat <<< "${albums}" > "data/${artist}/albums"
+done
+
+cat <<< "${SPOTIFY_ARTIST_IDS}" > "data/artists"
+

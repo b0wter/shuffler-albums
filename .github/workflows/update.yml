@@ -21,15 +21,25 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      #- uses: actions/checkout@v3
-
-      # Runs a single command using the runners shell
-      #- name: Run a one-line script
-      #  run: curl heise.de
+      - uses: actions/checkout@v3
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
+        with:
+          SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+          SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
+        env:
+          SPOTIFY_ARTIST_IDS: ${{ env.SPOTIFY_ARTIST_IDS }}
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
-          curl heise.de
+          ./run
+      - name: Commit files
+        run: |
+          git config --local user.email "bot@voxcu.be"
+          git config --local user.name "Auto-Bot"
+          git commit -a -m "Regenerated album and artist data"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.WRITE_TO_REPO_TOKEN }}
+          repository: b0wter/shuffler-albums
+          force_with_lease: true
