@@ -21,16 +21,17 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
-        uses: actions/checkout@v3
         with:
           SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
           SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
         env:
           SPOTIFY_ARTIST_IDS: ${{ env.SPOTIFY_ARTIST_IDS }}
         run: |
+          cd "$GITHUB_WORKSPACE"
           ./refresh_all_data
       - name: Commit files
         run: |
