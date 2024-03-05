@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Refresh artist and album data
 
 # Controls when the workflow will run
 on:
@@ -34,7 +34,14 @@ jobs:
           SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
 
       # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Commit changes
         run: |
-          
-          echo test, and deploy your project.
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -a -m "Add changes"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.WRITE_TO_REPO_TOKEN }}
+          branch: ${{ github.ref }}
