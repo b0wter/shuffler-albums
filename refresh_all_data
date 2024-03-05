@@ -2,18 +2,13 @@
 
 set -e
 
-if [ -z "$SPOTIFY_CLIENT_ID" ]; then
-    echo "SPOTIFY_CLIENT_ID environment variable needs to be set and non-empty"
-    exit 1
-fi
+SPOTIFY_CLIENT_ID=$1
+SPOTIFY_CLIENT_SECRET=$2
+SPOTIFY_ARTIST_IDS=$3
 
-if [ -z "$SPOTIFY_CLIENT_SECRET" ]; then
-    echo "SPOTIFY_CLIENT_SECRET environment variable needs to be set and non-empty"
-    exit 1
-fi
-
-if [ -z "$SPOTIFY_ARTIST_IDS" ]; then
-    echo "SPOTIFY_ARTIST_IDS environment variable needs to be set and non-empty"
+if [ "$#" -ne 3 ]; then
+    echo "Usage: $0 <client_id> <client_secret> <artist_ids>"
+    echo "Artist ids should bie given in the form 'abcd;efgh;ijkl"
     exit 1
 fi
 
