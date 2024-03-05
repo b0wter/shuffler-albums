@@ -31,7 +31,7 @@ jobs:
         env:
           SPOTIFY_ARTIST_IDS: ${{ env.SPOTIFY_ARTIST_IDS }}
         run: |
-          ./run
+          ./refresh_all_data
       - name: Commit files
         run: |
           git config --local user.email "bot@voxcu.be"
