@@ -19,6 +19,8 @@ IFS=';' read -ra artists <<< "$SPOTIFY_ARTIST_IDS"
 rm -rf data
 mkdir data
 
+echo "Retrieving details for ${#SPOTIFY_ARTIST_IDS[@]} artists"
+
 for artist in "${artists[@]}"; do
     mkdir "data/$artist"
     echo "Getting details for id $artist"
