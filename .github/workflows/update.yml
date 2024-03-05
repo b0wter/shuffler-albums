@@ -33,11 +33,13 @@ jobs:
         run: |
           cd "$GITHUB_WORKSPACE"
           ./refresh_all_data
+
       - name: Commit files
         run: |
           git config --local user.email "bot@voxcu.be"
           git config --local user.name "Auto-Bot"
           git commit -a -m "Regenerated album and artist data"
+
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
