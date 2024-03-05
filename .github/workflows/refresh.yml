@@ -44,9 +44,9 @@ jobs:
           git add .
           if [[ `git status --porcelain` ]]; then
             git commit -m "Refreshed artist and album data"
-            echo 'true' >> "$HAS_CHANGED"
+            echo "HAS_CHANGED=true" >> $GITHUB_ENV
           else
-            echo 'false' >> "$HAS_CHANGED"
+            echo "HAS_CHANGED=false" >> $GITHUB_ENV
           fi
 
       - name: Push changes
