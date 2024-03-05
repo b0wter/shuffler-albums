@@ -13,6 +13,9 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+  env:
+    SPOTIFY_ARTIST_IDS: ${{ vars.SPOTIFY_ARTIST_IDS }}
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -29,7 +32,6 @@ jobs:
       - name: Run a one-line script
         run: ./refresh_all_data "$SPOTIFY_CLIENT_ID" "$SPOTIFY_CLIENT_SECRET" "SPOTIFY_ARTIST_IDS"
         env:
-          SPOTIFY_ARTIST_IDS: ${{ env.SPOTIFY_ARTIST_IDS }}
           SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
           SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
 
