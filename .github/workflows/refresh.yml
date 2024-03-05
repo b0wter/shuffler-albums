@@ -28,6 +28,9 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: ./refresh_all_data
+        with:
+          SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+          SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
         env:
           SPOTIFY_ARTIST_IDS: ${{ env.SPOTIFY_ARTIST_IDS }}
 
