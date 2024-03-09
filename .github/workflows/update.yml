@@ -1,10 +1,14 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Update data
+name: Update artist and album data
 
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
   schedule:
   - cron: "15 12 * * 5"
 
@@ -21,28 +25,33 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        with:
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: ./refresh_all_data "$SPOTIFY_CLIENT_ID" "$SPOTIFY_CLIENT_SECRET" "$SPOTIFY_ARTIST_IDS"
+        env:
+          SPOTIFY_ARTIST_IDS: ${{ vars.SPOTIFY_ARTIST_IDS }}
           SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
           SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
-        env:
-          SPOTIFY_ARTIST_IDS: ${{ env.SPOTIFY_ARTIST_IDS }}
-        run: |
-          cd "$GITHUB_WORKSPACE"
-          ./refresh_all_data
 
-      - name: Commit files
+      # Runs a set of commands using the runners shell
+      - name: Commit changes
         run: |
-          git config --local user.email "bot@voxcu.be"
-          git config --local user.name "Auto-Bot"
-          git commit -a -m "Regenerated album and artist data"
+          tree
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .
+          if [[ `git status --porcelain` ]]; then
+            git commit -m "Refreshed artist and album data"
+            echo "HAS_CHANGED=true" >> $GITHUB_ENV
+          else
+            echo "HAS_CHANGED=false" >> $GITHUB_ENV
+          fi
 
       - name: Push changes
+        if: env.HAS_CHANGED == 'true'
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.WRITE_TO_REPO_TOKEN }}
-          repository: b0wter/shuffler-albums
-          force_with_lease: true
+          branch: ${{ github.ref }}
