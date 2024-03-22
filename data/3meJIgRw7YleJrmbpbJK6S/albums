@@ -1,5 +1,26 @@
 [
   {
+    "name": "Folge 226: Die Spur der Toten",
+    "url_to_open": "https://open.spotify.com/artist/3meJIgRw7YleJrmbpbJK6S",
+    "images": [
+      {
+        "height": 640,
+        "url": "https://i.scdn.co/image/ab67616d0000b2732674d127915797ab409a18c1",
+        "width": 640
+      },
+      {
+        "height": 300,
+        "url": "https://i.scdn.co/image/ab67616d00001e022674d127915797ab409a18c1",
+        "width": 300
+      },
+      {
+        "height": 64,
+        "url": "https://i.scdn.co/image/ab67616d000048512674d127915797ab409a18c1",
+        "width": 64
+      }
+    ]
+  },
+  {
     "name": "Folge 225: und der Puppenmacher",
     "url_to_open": "https://open.spotify.com/artist/3meJIgRw7YleJrmbpbJK6S",
     "images": [

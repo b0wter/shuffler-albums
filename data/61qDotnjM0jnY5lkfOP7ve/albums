@@ -1,5 +1,26 @@
 [
   {
+    "name": "Folge 231: Knackis streicheln mit der Faust",
+    "url_to_open": "https://open.spotify.com/artist/61qDotnjM0jnY5lkfOP7ve",
+    "images": [
+      {
+        "height": 640,
+        "url": "https://i.scdn.co/image/ab67616d0000b27374c86cc686ab4f557509bd93",
+        "width": 640
+      },
+      {
+        "height": 300,
+        "url": "https://i.scdn.co/image/ab67616d00001e0274c86cc686ab4f557509bd93",
+        "width": 300
+      },
+      {
+        "height": 64,
+        "url": "https://i.scdn.co/image/ab67616d0000485174c86cc686ab4f557509bd93",
+        "width": 64
+      }
+    ]
+  },
+  {
     "name": "Folge 230: Die Tesla-Verschwörung",
     "url_to_open": "https://open.spotify.com/artist/61qDotnjM0jnY5lkfOP7ve",
     "images": [
